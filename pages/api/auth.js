@@ -22,7 +22,7 @@ export default (req, res) => {
     // if (!user.password !== 'password') {
       return res.status(404).end()
     }
-
+    // serialize cookies
     res.setHeader('Set-Cookie', cookie.serialize('authorization', user.name, {
         httpOnly: true, // Javascript can't access value
         secure: process.env.NODE_ENV === 'development' ? false : true, // Only use HTTPS

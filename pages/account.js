@@ -1,13 +1,21 @@
-import React from 'react'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from 'react';
+import Head from 'next/head';
+import api from '../api';
+import { useRouter } from 'next/router';
+import styles from '../styles/Home.module.css';
 
 export default function Account({ query }) {
 
+  const router = useRouter();
+
+  const logout = () => {
+    api.get('/api/logout').then(() => {
+      router.push('/')
+    })
+  }
+
   React.useEffect(() => {
-
     // Call the Github API route to fetch user data
-
   }, [])
 
   return (
@@ -17,7 +25,7 @@ export default function Account({ query }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Add logout button */}
+      <button className={styles.button} style={{ background: 'red', margin: 'none' }} onClick={() => logout()}>&larr; Logout</button>
 
       <main className={styles.main}>
         <h1>Authenticated Account Page</h1>
