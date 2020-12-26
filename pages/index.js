@@ -1,7 +1,7 @@
 import React from 'react';
 import api from '../api';
 import { useRouter } from 'next/router';
-import { setServers } from 'dns';
+// import { setServers } from 'dns';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 
@@ -14,7 +14,7 @@ export default function Home() {
     e.preventDefault();
 
     try {
-      await apiResolver.post('/api/auth', {
+      await api.post('/api/auth', {
         username, password
       })
       router.push('/account');

@@ -1,4 +1,4 @@
-const allowedMethods = [];
+const allowedMethods = ['POST'];
 
 export default (req, res) => {
     res.setHeader('Allow', allowedMethods)
