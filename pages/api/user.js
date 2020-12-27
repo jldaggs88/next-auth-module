@@ -1,4 +1,5 @@
-const allowedMethods = ['POST'];
+import data from '../../data.js';
+const allowedMethods = ['POST', 'GET'];
 
 export default (req, res) => {
     res.setHeader('Allow', allowedMethods)
@@ -7,5 +8,14 @@ export default (req, res) => {
         return res.status(405).end()
     }
 
-    return res.status(200).end()
+    const name = req.cookies.authorization;
+    if (!name) {
+        return res.status(404).end()
+    }
+    const { email } = data.find(user => user.name === name)
+
+    return res.status(200).json({
+        name,
+        email
+    })
 }

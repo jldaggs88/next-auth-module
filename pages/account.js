@@ -1,18 +1,31 @@
 import React from 'react';
+import useSWR from 'swr';
 import Head from 'next/head';
 import api from '../api';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 
+const fetcher = async (url) => api.get(url);
+
 export default function Account({ query }) {
 
   const router = useRouter();
+
+  const { data, error } = useSWR('/api/user', fetcher);
+
+  if (error) {
+    router.push('/')
+  }
+    
+  if (!data) {
+    return <div>Loading...</div>
+  }
 
   const logout = () => {
     api.get('/api/logout').then(() => {
       router.push('/')
     })
-  }
+  };
 
   React.useEffect(() => {
     // Call the Github API route to fetch user data
@@ -33,7 +46,8 @@ export default function Account({ query }) {
               <h2>Basic User Information</h2>
               <small>Since we know it's you.. here's your information!</small>
 
-              {/* Display user information */}
+              <p><b>Name:</b> {data && data.data && data.data.name}</p>
+              <p><b>Email:</b> {data && data.data && data.data.email}</p>
 
         </section>
         <section className={styles.data}>
