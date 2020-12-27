@@ -5,7 +5,26 @@ import api from '../api';
 import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 
+const CLIENT_ID = process.env.CLIENT_ID;
+
 const fetcher = async (url) => api.get(url);
+
+const Github = ({ data }) => {
+  return (
+      <div className={styles.github}>
+          {!data ?
+              <a href={`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}`}>Authorize Github</a> :
+              <div>
+                  <pre>
+                      <code>
+                          {JSON.stringify(data, null, 4)}
+                      </code>
+                  </pre>
+              </div>
+          }
+      </div>
+  )
+}
 
 export default function Account({ query }) {
 
@@ -52,9 +71,9 @@ export default function Account({ query }) {
         </section>
         <section className={styles.data}>
           <h2>Github OAuth</h2>
-          <small>Authorize this application to acces your Github information.</small>
+          <small>Authorize this application to access your Github information.</small>
 
-          {/* Add Github component */}
+          <Github />
 
         </section>
       </main>
